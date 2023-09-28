@@ -4,6 +4,39 @@
 // - socket.io-client
 
 import os from 'os'
+import io from 'socket.io-client'
+
+const options = {
+	auth: {
+		token: '3129rwdfk0q9i3u409qir012fpwqf230',
+	},
+}
+
+const socket = io('http://192.168.1.191:3000', options)
+
+socket.on('connect', () => {
+	// console.log('we connected to the server')
+	const nI = os.networkInterfaces()
+	let macA
+	for (let key in nI) {
+		const isInternetFacing = !nI[key][0].internal
+		if (isInternetFacing) {
+			macA = nI[key][0].mac
+			break
+		}
+	}
+	// console.log(macA)
+
+	const perfDataInterval = setInterval(async () => {
+		const perfData = await performanceLoadData()
+		perfData.macA = macA
+		socket.emit('perfData', perfData)
+	}, 1000)
+
+	socket.on('disconnect', () => {
+		clearInterval(perfDataInterval)
+	})
+})
 
 function cpuAverage() {
 	const cpus = os.cpus()
