@@ -21,7 +21,7 @@ socket.on('connect', () => {
 	for (let key in nI) {
 		const isInternetFacing = !nI[key][0].internal
 		if (isInternetFacing) {
-			macA = nI[key][0].mac
+			macA = nI[key][0].mac + Math.floor(Math.random() * 1000000)
 			break
 		}
 	}
@@ -30,7 +30,7 @@ socket.on('connect', () => {
 	const perfDataInterval = setInterval(async () => {
 		const perfData = await performanceLoadData()
 		perfData.macA = macA
-		socket.emit('perfData', perfData)
+		socket.emit('perfDataClient', perfData)
 	}, 1000)
 
 	socket.on('disconnect', () => {

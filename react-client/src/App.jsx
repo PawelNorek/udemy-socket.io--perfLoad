@@ -21,7 +21,7 @@ function App() {
 			copyPerfData[data.macA] = data
 			setPerformanceData(copyPerfData)
 		})
-	}, [])
+	}, [performanceData])
 
 	const widgets = Object.values(performanceData).map(d => <Widget data={d} key={d.macA} />)
 

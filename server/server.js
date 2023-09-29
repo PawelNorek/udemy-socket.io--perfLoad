@@ -16,6 +16,7 @@ import os from 'os'
 import { setupMaster, setupWorker } from '@socket.io/sticky'
 import { createAdapter, setupPrimary } from '@socket.io/cluster-adapter'
 import socketMain from './socketMain.js'
+import { instrument } from '@socket.io/admin-ui'
 
 const numCPUs = os.cpus().length
 
@@ -58,10 +59,15 @@ if (cluster.isPrimary) {
 	const httpServer = http.createServer()
 	const io = new Server(httpServer, {
 		cors: {
-			origin: 'http://192.168.1.191:5173',
+			origin: ['http://192.168.1.191:5173', 'http://192.168.1.191:3030'],
 			credentials: true,
 		},
 	})
+
+	// instrument(io, {
+	// 	auth: false,
+	// 	mode: 'development',
+	// })
 
 	// use the cluster adapter
 	io.adapter(createAdapter())

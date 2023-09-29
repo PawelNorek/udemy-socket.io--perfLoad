@@ -1,10 +1,20 @@
 import { useRef } from 'react'
 import drawCircle from '../utilities/canvasLoadAnimation'
+import React from 'react'
 
-const Mem = ({ data }) => {
+type Data = {
+	data: {
+		freeMem: number
+		totalMem: number
+		usedMem: number
+		memUsage: number
+	}
+}
+
+const Mem = ({ data }: Data) => {
 	const { freeMem, totalMem, usedMem, memUsage } = data
 
-	const canvasEl = useRef()
+	const canvasEl = useRef(null)
 	drawCircle(canvasEl.current, memUsage * 100)
 
 	const totalMemInGB = Math.floor(((totalMem / 1024 / 1024 / 1024) * 100) / 100)
