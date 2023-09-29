@@ -1,6 +1,17 @@
 import moment from 'moment'
+import React from 'react'
 
-const Info = ({ data }) => {
+type Data = {
+	data: {
+		osType: string
+		upTime: number
+		cpuType: string
+		numCores: number
+		cpuSpeed: number
+	}
+}
+
+const Info = ({ data }: Data) => {
 	return (
 		<div className='col-sm-3 col-sm-offset-1 cpu-info'>
 			<h3>Operating System</h3>

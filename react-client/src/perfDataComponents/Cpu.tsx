@@ -1,8 +1,15 @@
 import { useRef } from 'react'
 import drawCircle from '../utilities/canvasLoadAnimation'
+import React from 'react'
+
+type Data = {
+	data: {
+		cpuLoad: number
+	}
+}
 
 const Cpu = ({ data }) => {
-	const canvasEl = useRef()
+	const canvasEl = useRef(null)
 	drawCircle(canvasEl.current, data.cpuLoad)
 
 	return (
